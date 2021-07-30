@@ -23,6 +23,7 @@ mongoose
     });
 // routes
 const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 // middleware
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -37,6 +38,9 @@ app.get("/", (req, res) => {
 });
 // user routes
 app.use("/api", userRoutes);
+// auth routes
+app.use("/api", authRoutes);
+
 app.listen(port, () => {
     console.log(`Server is Running on PORT=${port}`);
 });
