@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+// importing config
+const config = require("config");
 // importing User models
 const User = require("../models/User");
 // get api/users
@@ -48,7 +51,18 @@ router.post(
             user.password = await bcrypt.hash(password, salt);
             await user.save();
             // return token
-            res.send("user register success");
+            const payload = {
+                // because mongoDB has _id
+                user: {
+                    id: user._id,
+                },
+            };
+            // jwt sign
+            jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000 }, (err, token) => {
+                if (err) throw err;
+                res.json({ token });
+            });
+            // res.send("user register success");
         } catch (err) {
             console.error(err.message);
             res.status(500).send("Server Error");

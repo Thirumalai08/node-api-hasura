@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+// middleware custom auth
+const auth = require("./middleware/auth");
 mongoose
     .connect("mongodb+srv://nambi:nambi123@cluster0.ct1ru.mongodb.net/nambi?retryWrites=true&w=majority", {
         useNewUrlParser: true,
@@ -26,7 +28,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.get("/data", (req, res) => {
+app.get("/data", auth, (req, res) => {
     res.send(data);
 });
 
