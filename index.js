@@ -25,6 +25,7 @@ mongoose
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
+const imageRoutes = require("./routes/image");
 // middleware
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -43,6 +44,8 @@ app.use("/api", userRoutes);
 app.use("/api", authRoutes);
 // post routes
 app.use("/api", postRoutes);
+// image routes
+app.use("/api", imageRoutes);
 
 app.listen(port, () => {
     console.log(`Server is Running on PORT=${port}`);
