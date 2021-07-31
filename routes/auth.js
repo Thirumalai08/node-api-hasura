@@ -13,7 +13,7 @@ const auth = require("../middleware/auth");
 // get api/auth
 // test route authenticates specific user
 // private access
-router.get("/auth", auth, async (req, res) => {
+router.get("/auth/user/:id", auth, async (req, res) => {
     try {
         const user = await User.findOneById(req.user.id).select("-password");
         res.json(user);
