@@ -58,11 +58,19 @@ router.post(
                 },
             };
             // jwt sign
-            jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000 }, (err, token) => {
-                if (err) throw err;
-                res.json({ token });
-            });
+            // jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000 }, (err, token) => {
+            //     if (err) throw err;
+            //     // res.json(user, { token });
+            //     res.json({ token });
+            // });
             // res.send("user register success");
+            const token = jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 36000 });
+            res.status(200).send({
+                user_id: user._id,
+                name: user.name,
+                email: user.email,
+                token: token,
+            });
         } catch (err) {
             console.error(err.message);
             res.status(500).send("Server Error");
